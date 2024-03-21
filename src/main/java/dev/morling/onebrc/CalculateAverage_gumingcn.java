@@ -122,11 +122,11 @@ public class CalculateAverage_gumingcn {
     private static void splitFileIntoChunks(Path path, List<ByteBuffer> chunks) {
 
         try (FileChannel fileChannel = FileChannel.open(path, StandardOpenOption.READ);) {
-            int from = 0;
+            long from = 0;
             long size = fileChannel.size();
             long chunkSize = Math.max(size / Runtime.getRuntime().availableProcessors(), DEFAULT_CHUNK_SIZE);
             while (from < size) {
-                System.out.println("from:"+from+",size:"+Math.min(chunkSize, size - from));
+                System.out.println("from:" + from + ",size:" + Math.min(chunkSize, size - from));
                 MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, from, Math.min(chunkSize, size - from));
                 while (mappedByteBuffer.hasRemaining()) {
                     int endIndex = mappedByteBuffer.limit() - 1;
